@@ -31,9 +31,6 @@ install () {
 
     echo "Extracting version ${version} of restic"
     case "${filename##*.}" in 
-    zip)
-      unzip -qq "${TMP_DOWNLOAD_DIR}/${filename}" -d "${TMP_DOWNLOAD_DIR}"
-      ;;
     bz2)
       OLDPWD=$(pwd)
       cd ${TMP_DOWNLOAD_DIR}/
@@ -49,9 +46,9 @@ install () {
 
     local f
     for f in "${TMP_DOWNLOAD_DIR}/${filename%%.*}"/*; do
-      if [[ -f "${f}" ]] \
-      && [[ -x "${f}" ]]; then
+      if [[ -f "${f}" ]]; then
         cp "${f}" "${bin_install_path}/restic"
+        chmod +x "${bin_install_path}/restic"
       fi
     done
     echo "Done"
