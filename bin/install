@@ -34,8 +34,8 @@ install () {
     zip)
       unzip -qq "${TMP_DOWNLOAD_DIR}/${filename}" -d "${TMP_DOWNLOAD_DIR}"
       ;;
-    gz)
-      tar xf "${TMP_DOWNLOAD_DIR}/${filename}" -C "${TMP_DOWNLOAD_DIR}"
+    bz2)
+      bzip2 -d "${TMP_DOWNLOAD_DIR}/${filename}" -C "${TMP_DOWNLOAD_DIR}"
       ;;
     esac
 
@@ -49,7 +49,7 @@ install () {
     for f in "${TMP_DOWNLOAD_DIR}/${filename%%.*}"/*; do
       if [[ -f "${f}" ]] \
       && [[ -x "${f}" ]]; then
-        cp "${f}" "${bin_install_path}"
+        cp "${f}" "${bin_install_path}/restic"
       fi
     done
     echo "Done"
