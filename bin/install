@@ -35,8 +35,10 @@ install () {
       unzip -qq "${TMP_DOWNLOAD_DIR}/${filename}" -d "${TMP_DOWNLOAD_DIR}"
       ;;
     bz2)
-      bzip2 -d "${TMP_DOWNLOAD_DIR}/${filename}" -C "${TMP_DOWNLOAD_DIR}"
-      ;;
+      OLDPWD=$(pwd)
+      cd ${TMP_DOWNLOAD_DIR}/
+      bzip2 -d "${filename}"
+      cd $OLDPWD
     esac
 
     echo "Cleaning restic previous binaries"
