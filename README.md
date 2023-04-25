@@ -1,4 +1,4 @@
-# adsf-restic
+# asdf-restic
 
 [restic](https://restic.net/) plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
