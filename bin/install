@@ -75,6 +75,7 @@ get_filename () {
 get_download_url () {
   local -r version="$1"
   local platform
+  local IS_EXISTS=1
 
   case "$OSTYPE" in
     darwin*) platform="darwin" ;;
@@ -93,51 +94,47 @@ get_download_url () {
     armv5* | armv6* | armv7*) architecture="arm" ;;
     x86_64*) architecture="amd64" ;;
     i386 | i686 | x86) architecture="386" ;;
+    mips) architecture="mips" ;;
+    mips64) architecture="mips64" ;;
+    s390x) architecture="s390x" ;;
+    ppc64) architecture="ppc64" ;;
     *) fail "Unsupported architecture" ;;
   esac
   
   if [ "$platform" == "darwin" ]; then
     case $architecture in
-      amd64|arm64) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
+      amd64|arm64) IS_EXISTS=1 ;;
       *) fail "Unsupported architecture for ${platform}" ;;
     esac
   elif [ "$platform" == "linux" ]; then
     case $architecture in
-      amd64|arm64|arm|386) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
+      amd64|arm64|arm|386|mips|mips64|s390x|ppc64) IS_EXISTS=1 ;;
       *) fail "Unsupported architecture for ${platform}" ;;
     esac
   elif [ "$platform" == "openbsd" ]; then
     case $architecture in
-      amd64|386) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
+      amd64|386) IS_EXISTS=1 ;;
       *) fail "Unsupported architecture for ${platform}" ;;
     esac
   elif [ "$platform" == "freebsd" ]; then
     case $architecture in
-      amd64|arm|386) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
+      amd64|arm|386) IS_EXISTS=1 ;;
       *) fail "Unsupported architecture for ${platform}" ;;
     esac
   elif [ "$platform" == "netbsd" ]; then
     case $architecture in
-      amd64|386) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
-      *) fail "Unsupported architecture for ${platform}" ;;  
+      amd64|386) IS_EXISTS=1 ;;
+      *) fail "Unsupported architecture for ${platform}" ;;
     esac
   elif [ "$platform" == "solaris" ]; then
     case $architecture in
-      amd64) 
-        echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
-      ;;
-      *) fail "Unsupported architecture for ${platform}" ;;  
+      amd64) IS_EXISTS=1 ;;
+      *) fail "Unsupported architecture for ${platform}" ;;
     esac
+  fi
+
+  if [ $IS_EXISTS -eq 1 ]; then
+    echo https://github.com/restic/restic/releases/download/v"${version}"/restic_"${version}"_"${platform}"_"${architecture}".bz2
   fi
 
 }
