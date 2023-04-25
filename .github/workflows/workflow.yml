@@ -10,8 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      # - name: Run ShellCheck
-      #   run: shellcheck bin/*
+      - name: Run ShellCheck
+        run: shellcheck bin/*
         
   plugin_test:
     needs: [lint]
