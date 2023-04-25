@@ -33,9 +33,9 @@ install () {
     case "${filename##*.}" in 
     bz2)
       OLDPWD=$(pwd)
-      cd ${TMP_DOWNLOAD_DIR}/
+      cd "${TMP_DOWNLOAD_DIR}"
       bzip2 -d "${filename}"
-      cd $OLDPWD
+      cd "${OLDPWD}"
     esac
 
     echo "Cleaning restic previous binaries"
@@ -45,11 +45,11 @@ install () {
     mkdir -p "${bin_install_path}"
 
     local f
-    for f in "${TMP_DOWNLOAD_DIR}/*"; do
+    for f in ${TMP_DOWNLOAD_DIR}/*; do
     
-      if [ -f ${f} ]; then
-        cp ${f} ${bin_install_path}/restic
-        chmod +x ${bin_install_path}/restic
+      if [ -f "${f}" ]; then
+        cp "${f}" "${bin_install_path}"/restic
+        chmod +x "${bin_install_path}"/restic
       fi
     done
     echo "Done"
