@@ -14,7 +14,7 @@ set \
 TMP_DOWNLOAD_DIR="$(mktemp -d -t "asdf_restic_XXXXXX")"
 readonly TMP_DOWNLOAD_DIR
 
-#trap 'rm -rf "${TMP_DOWNLOAD_DIR?}"' EXIT
+trap 'rm -rf "${TMP_DOWNLOAD_DIR?}"' EXIT
 
 install () {
   # local -r install_type="$1"
