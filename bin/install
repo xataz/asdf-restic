@@ -45,10 +45,11 @@ install () {
     mkdir -p "${bin_install_path}"
 
     local f
-    for f in "${TMP_DOWNLOAD_DIR}*"; do
+    for f in "${TMP_DOWNLOAD_DIR}/*"; do
+    
       if [ -f ${f} ]; then
-        cp "${f}" "${bin_install_path}/restic"
-        chmod +x "${bin_install_path}/restic"
+        cp ${f} ${bin_install_path}/restic
+        chmod +x ${bin_install_path}/restic
       fi
     done
     echo "Done"
